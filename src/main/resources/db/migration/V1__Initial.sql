@@ -1,0 +1,51 @@
+-- CREATING TABLES
+
+CREATE TABLE IF NOT EXISTS person (
+id INTEGER AUTO_INCREMENT,
+first_name VARCHAR(30) NOT NULL,
+last_name VARCHAR(30) NOT NULL,
+reg_date DATETIME,
+birth_date DATETIME,
+e_mail VARCHAR(50) UNIQUE,
+phone VARCHAR(50),
+password  VARCHAR(255) NOT NULL,
+photo VARCHAR(100),
+about VARCHAR(500),
+city VARCHAR(50),
+country VARCHAR(50),
+confirmation_code VARCHAR(20),
+is_approved BIT NOT NULL DEFAULT 0,
+messages_permission VARCHAR(50),
+last_online_time DATETIME,
+is_blocked BIT NOT NULL DEFAULT 0,
+is_online BIT NOT NULL DEFAULT 0,
+is_deleted BIT NOT NULL DEFAULT 0,
+PRIMARY KEY (id)
+);
+
+CREATE TABLE IF NOT EXISTS message (
+id INTEGER AUTO_INCREMENT,
+time DATETIME,
+author_id INTEGER NOT NULL,
+recipient_id INTEGER NOT NULL,
+message_text VARCHAR(500),
+read_status VARCHAR(30),
+dialog_id INTEGER NOT NULL,
+is_deleted BIT NOT NULL DEFAULT 0,
+PRIMARY KEY (id)
+);
+
+CREATE TABLE IF NOT EXISTS post (
+id INTEGER AUTO_INCREMENT,
+time DATETIME,
+author_id INTEGER NOT NULL,
+title VARCHAR(50),
+post_text VARCHAR(500),
+is_blocked BIT NOT NULL DEFAULT 0,
+is_deleted BIT NOT NULL DEFAULT 0,
+PRIMARY KEY (id)
+);
+
+-- CREATING FOREIGN KEYS
+ALTER TABLE message ADD FOREIGN KEY (author_id) REFERENCES person(id);
+ALTER TABLE message ADD FOREIGN KEY (recipient_id) REFERENCES person(id);
